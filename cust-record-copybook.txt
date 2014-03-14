@@ -1,0 +1,12 @@
+        01  CUST-RECORD.
+           05 CUST-ID                  PIC 9(5) COMP-3.
+           05 CUST-NAME.
+              10 CUST-LAST-NAME       PIC X(15).
+              10 CUST-FIRST-NAME      PIC X(10).
+           05 STREET-ADDRESS    PIC X(20).
+           05 CITY       PIC X(20).
+           05 US-STATE                        PIC  X(02).
+           05 OTHER-STATE-PROVINCE    PIC X(20).
+           05 COUNTRY-CODE    PIC X(3).
+           05 POSTAL-CODE                  PIC X(10).
+           05 NOTES    PIC X(40).

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- =================================================================================
+     This script generates JAXB classes from a COBOL-annotated XML schema. It then
+     goes on and generates Transformers for selected JAXB root classes.
+     Binding classes provide an efficient runtime code for visitors. They avoid
+     reflection and use of annotations at runtime.
+
+     Change all occurences of:
+         - xsdFile         (Your COBOL annotated XML Schema file)
+         - jaxbPackageName (The JAXB package name for generated classes)
+         - jaxbRootClass   (A root class name. Add as many as needed.) 
+  -->
+<project basedir="." default="signalSuccess" name="generate-COXB-classes">
+
+    <!-- ===========================================================  -->
+    <!-- Setup environment
+    -->
+    <target name="init">
+    
+        <!-- Make sure target directories exist -->
+        <mkdir dir="/Users/kkrupa/eclipse-workspace/mainframe-ml-sample/src"/>
+        <mkdir dir="/Users/kkrupa/eclipse-workspace/mainframe-ml-sample/bin"/>
+    
+        <!-- Classpath setting -->
+        <path id="classpath">
+            <fileset dir="/Applications/eclipse/plugins/com.legstar.eclipse.plugin.common_1.5.2/" includes="lib/*.jar" />
+            <!--JAXB generated classes (needed for reflection) -->
+            <dirset dir="/Users/kkrupa/eclipse-workspace/mainframe-ml-sample/bin"/>
+        </path>
+        
+        <!-- Generator ant task -->
+        <taskdef name="jaxbgen"
+            classname="com.legstar.jaxb.gen.CobolJAXBGenerator"
+            classpathref="classpath"/>
+        
+        <!-- COBOL Binding Generator ant task -->
+        <taskdef name="coxbgen"
+            classname="com.legstar.coxb.gen.CoxbBindingGenerator"
+            classpathref="classpath"/>
+        
+    </target>
+
+    <!-- ===========================================================  -->
+    <!-- Generate the JAXB classes source
+    -->
+    <target name="generateJAXB" depends="init">
+        <echo message="Generating JAXB classes for /Users/kkrupa/eclipse-workspace/mainframe-ml-sample/CustRecord.xsd" level="info"/>
+        <jaxbgen 
+            xsdFile="/Users/kkrupa/eclipse-workspace/mainframe-ml-sample/CustRecord.xsd"
+            targetDir="/Users/kkrupa/eclipse-workspace/mainframe-ml-sample/src"
+            jaxbPackageName="com.legstar.test.coxb.custrecord"
+            generateIsSetMethod="true"
+            serializableUid="1"
+        />
+    </target>
+
+    <!-- ===========================================================  -->
+    <!-- Compile the generated JAXB classes. fork="no" prevents
+    the bug on package-info.java
+    -->
+    <target name="compileJAXB" depends="generateJAXB">
+        <javac srcdir="/Users/kkrupa/eclipse-workspace/mainframe-ml-sample/src"
+            destdir="/Users/kkrupa/eclipse-workspace/mainframe-ml-sample/bin"
+            classpathref="classpath"
+            fork="yes"
+            includes="com/legstar/test/coxb/custrecord/**"
+        />
+    </target>
+  
+    <!-- ===========================================================  -->
+    <!-- Generate Transformers by reflecting on JAXB classes.
+    -->
+    <target name="generateCOXB" depends="compileJAXB">
+        <echo message="Generating Transformers for [CustRecord, CustName]" level="info"/>
+        <coxbgen 
+            targetDir="/Users/kkrupa/eclipse-workspace/mainframe-ml-sample/src"
+            jaxbPackageName="com.legstar.test.coxb.custrecord"
+            coxbPackageName="com.legstar.test.coxb.custrecord.bind"
+            xmlTransformers="true"
+            >
+            <jaxbRootClass name="CustRecord"/>
+            <jaxbRootClass name="CustName"/>
+        </coxbgen>
+    </target>
+
+    <!-- ===========================================================  -->
+    <!-- Compile the generated Transformers.
+    -->
+    <target name="compileCOXB" depends="generateCOXB">
+        <javac srcdir="/Users/kkrupa/eclipse-workspace/mainframe-ml-sample/src"
+            destdir="/Users/kkrupa/eclipse-workspace/mainframe-ml-sample/bin"
+            classpathref="classpath"
+            fork="yes"
+        />
+    </target>
+  
+    <!-- ===========================================================  -->
+    <!-- Delete the probe file to signal success
+    -->
+    <target name="signalSuccess" depends="generateCOXB">
+        <delete file="/var/folders/lz/z81gyg0j7_j9zgnjxyrz79n4gzx05z/T/probe5938328428298174597tmp" quiet="true"/>
+    </target>
+    
+</project>

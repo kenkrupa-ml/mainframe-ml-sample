@@ -1,0 +1,4 @@
+custId|custFirstName|custLastName|streetAddress|city|usState|otherStateProvince|countryCode|postalCode|notes
+001|John|Doe|1 Main St.|Anytown|NY||USA|12345|This is our first customer
+002|Ewan|Whoelse|5 Main St.|Anytown|NY||USA|12345|Lives down the streeet from John Doe
+003|Bilbo|Baggins|Bag End, Bagshot Row|Hobbiton||The Shire|MDE|1379|Looks great for his age

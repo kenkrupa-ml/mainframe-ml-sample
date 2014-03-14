@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:cb="http://www.legsem.com/legstar/xml/cobol-binding-1.0.1.xsd" xmlns:tns="http://coxb.test.legstar.com/custrecord" elementFormDefault="qualified" targetNamespace="http://coxb.test.legstar.com/custrecord">
+    <complexType name="CustRecord">
+        <sequence>
+            <element name="custId">
+                <annotation>
+                    <appinfo>
+                        <cb:cobolElement cobolName="CUST-ID" levelNumber="5" picture="9(5)" signed="false" srceLine="2" totalDigits="5" type="PACKED_DECIMAL_ITEM" usage="PACKED-DECIMAL"/>
+                    </appinfo>
+                </annotation>
+                <simpleType>
+                    <restriction base="unsignedInt">
+                        <totalDigits value="5"/>
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="custName" type="tns:CustName">
+                <annotation>
+                    <appinfo>
+                        <cb:cobolElement cobolName="CUST-NAME" levelNumber="5" srceLine="3" type="GROUP_ITEM"/>
+                    </appinfo>
+                </annotation>
+            </element>
+            <element name="streetAddress">
+                <annotation>
+                    <appinfo>
+                        <cb:cobolElement cobolName="STREET-ADDRESS" levelNumber="5" picture="X(20)" srceLine="6" type="ALPHANUMERIC_ITEM"/>
+                    </appinfo>
+                </annotation>
+                <simpleType>
+                    <restriction base="string">
+                        <maxLength value="20"/>
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="city">
+                <annotation>
+                    <appinfo>
+                        <cb:cobolElement cobolName="CITY" levelNumber="5" picture="X(20)" srceLine="7" type="ALPHANUMERIC_ITEM"/>
+                    </appinfo>
+                </annotation>
+                <simpleType>
+                    <restriction base="string">
+                        <maxLength value="20"/>
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="usState">
+                <annotation>
+                    <appinfo>
+                        <cb:cobolElement cobolName="US-STATE" levelNumber="5" picture="X(02)" srceLine="8" type="ALPHANUMERIC_ITEM"/>
+                    </appinfo>
+                </annotation>
+                <simpleType>
+                    <restriction base="string">
+                        <maxLength value="2"/>
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="otherStateProvince">
+                <annotation>
+                    <appinfo>
+                        <cb:cobolElement cobolName="OTHER-STATE-PROVINCE" levelNumber="5" picture="X(20)" srceLine="9" type="ALPHANUMERIC_ITEM"/>
+                    </appinfo>
+                </annotation>
+                <simpleType>
+                    <restriction base="string">
+                        <maxLength value="20"/>
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="countryCode">
+                <annotation>
+                    <appinfo>
+                        <cb:cobolElement cobolName="COUNTRY-CODE" levelNumber="5" picture="X(3)" srceLine="10" type="ALPHANUMERIC_ITEM"/>
+                    </appinfo>
+                </annotation>
+                <simpleType>
+                    <restriction base="string">
+                        <maxLength value="3"/>
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="postalCode">
+                <annotation>
+                    <appinfo>
+                        <cb:cobolElement cobolName="POSTAL-CODE" levelNumber="5" picture="X(10)" srceLine="11" type="ALPHANUMERIC_ITEM"/>
+                    </appinfo>
+                </annotation>
+                <simpleType>
+                    <restriction base="string">
+                        <maxLength value="10"/>
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="notes">
+                <annotation>
+                    <appinfo>
+                        <cb:cobolElement cobolName="NOTES" levelNumber="5" picture="X(40)" srceLine="12" type="ALPHANUMERIC_ITEM"/>
+                    </appinfo>
+                </annotation>
+                <simpleType>
+                    <restriction base="string">
+                        <maxLength value="40"/>
+                    </restriction>
+                </simpleType>
+            </element>
+        </sequence>
+    </complexType>
+    <complexType name="CustName">
+        <sequence>
+            <element name="custLastName">
+                <annotation>
+                    <appinfo>
+                        <cb:cobolElement cobolName="CUST-LAST-NAME" levelNumber="10" picture="X(15)" srceLine="4" type="ALPHANUMERIC_ITEM"/>
+                    </appinfo>
+                </annotation>
+                <simpleType>
+                    <restriction base="string">
+                        <maxLength value="15"/>
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="custFirstName">
+                <annotation>
+                    <appinfo>
+                        <cb:cobolElement cobolName="CUST-FIRST-NAME" levelNumber="10" picture="X(10)" srceLine="5" type="ALPHANUMERIC_ITEM"/>
+                    </appinfo>
+                </annotation>
+                <simpleType>
+                    <restriction base="string">
+                        <maxLength value="10"/>
+                    </restriction>
+                </simpleType>
+            </element>
+        </sequence>
+    </complexType>
+    <element name="custRecord" type="tns:CustRecord">
+        <annotation>
+            <appinfo>
+                <cb:cobolElement cobolName="CUST-RECORD" levelNumber="1" srceLine="1" type="GROUP_ITEM"/>
+            </appinfo>
+        </annotation>
+    </element>
+</schema>
